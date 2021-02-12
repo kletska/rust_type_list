@@ -30,7 +30,7 @@ impl<D, S: TTree> Cons<D> for (S,) {
 
 
 trait Child: Sized {
-    fn add_childs(self) -> (Self,) {
+    fn add_child(self) -> (Self,) {
         (self,)
     }
 }
@@ -76,21 +76,40 @@ impl<S: TTree> Back for (S,) {
 fn main() {
     let val = ()
         .cons(1)
-        .cons(().cons(2).cons(3))
-        ;
+        .cons(().cons(2))
+        .cons(().cons(3))
+        ; // non linear build
 
     let val2 = ()
         .cons(1)
-        .add_childs()
+        .add_child()
         .cons(2)
-        .add_childs()
-        .cons(4)
+        .add_child()
         .back()
+        .add_child()
         .cons(3)
+        .back()
+        ; // linear build
+
+    println!("{:?}", val); //((3, (2, ())), (1, ()))
+
+    println!("{:?}", val2);//((3, (2, ())), (1, ()))
+
+    let val3 = ()
+        .cons("I am root")
+        .add_child()
+        .cons("I am first root child")
+        .back()
+        .add_child()
+        .cons("I am second root child")
+        .add_child()
+        .cons("I am child of second root child")
+        .back()
+        .add_child()
+        .cons("I am second child of second root child")
+        .back()
         .back()
         ;
 
-    println!("{:?}", val);
-
-    println!("{:?}", val2);
+    println!("{:#?}", val3)
 }
