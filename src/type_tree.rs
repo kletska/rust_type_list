@@ -1,3 +1,5 @@
+use std::fmt::{Debug, Formatter};
+
 use crate::type_list::*;
 
 pub trait TypeTree {
@@ -11,7 +13,7 @@ impl<T> TypeTree for Leaf<T> {
     type Constructor = Self;
 }
 
-#[derive(Debug)]
+
 pub struct Node<N, T>(pub N, pub T);
 
 impl<N, T: TypeList> TypeTree for Node<N, T> {

@@ -15,6 +15,8 @@ fn main() {
             .add_leaf("I am grandson to")
         .back()
         ;
-
-    println!("{:#?}", tree)
+    let list = ("first",)
+        .add("second")
+        .add("third");
+    println!("{}", list.start_print())
 }
